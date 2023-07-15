@@ -89,7 +89,8 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $customer =  $this->customerRepository->find($id);
+        return view('customers.show', compact('customer'));
     }
 
     /**
