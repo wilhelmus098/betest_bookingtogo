@@ -19,4 +19,20 @@ class Customer extends Model
     protected $fillable = [
         'country_id', 'name', 'dob', 'phone', 'email'
     ];
+
+    /**
+     * Get country related to customer
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * Get family related to customer
+     */
+    public function family()
+    {
+        return $this->hasMany(Family::class);
+    }
 }

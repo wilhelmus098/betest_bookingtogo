@@ -1,4 +1,11 @@
 @extends('layouts.default')
+@if (\Session::has('message'))
+    <div class="alert alert-success">
+        <ul>
+            <li>{!! \Session::get('message') !!}</li>
+        </ul>
+    </div>
+@endif
 <table class="table table-striped">
     <thead>
         <tr>
@@ -13,15 +20,21 @@
         </tr>
     </thead>
     <tbody>
+        <?php
+            // dd($customers);
+            // foreach ($customers as $customer){
+            //     dd($customer->country->name);
+            // }
+        ?>
         @foreach ($customers as $customer)
             <tr>
                 <td>{{$customer->id}}</td>
-                <td>{{$customer->country_id}}</td>
+                <td>{{$customer->country->name}}</td>
                 <td>{{$customer->name}}</td>
                 <td>{{$customer->dob}}</td>
                 <td>{{$customer->phone}}</td>
                 <td>{{$customer->email}}</td>
-                <td><a href="{{ route('customers.edit',$customer->id) }}">Edit</a></td>
+                <td><a href="{{ route('customers.edit', $customer->id) }}">Edit</a></td>
                 <td>
                     <form action="{{ route('customers.destroy', $customer->id) }}" method="POST"
                         onsubmit="return confirm('{{ trans('are You Sure ? ') }}');"
