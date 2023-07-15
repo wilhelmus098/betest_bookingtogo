@@ -31,7 +31,7 @@ class CustomerController extends Controller
     public function index(Request $request)
     {
         $page = $request->input('page')??1;
-        $customers =  $this->customerRepository->all(1, $page);
+        $customers =  $this->customerRepository->all(100, $page);
 
         return view('customers.index', compact('customers'));
     }
@@ -41,9 +41,10 @@ class CustomerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $countries = $this->countryRepository->all();
+        return view('customers.create', compact('countries'));
     }
 
     /**
@@ -54,7 +55,30 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        // dd($input);
+        $request->validate([
+            'name' => 'required|string|max:50',
+            'dob' => 'required|date',
+            'phone' => 'required|string|max:20',
+            'email' => 'required|string|max:50',
+        ]);
+        $customer = $this->customerRepository->store($input);
+        // dd($customer->id);
+        if(isset($input['family'])){
+            $request->validate([
+                'family.*.relation' => 'required|string|max:50',
+                'family.*.dob' => 'required|date',
+                'family.*.name' => 'required|string|max:50',
+            ]);
+
+            foreach($input['family'] as $data) {
+                $data['customer_id'] = $customer->id;
+                $this->familyRepository->store($data);
+            }
+        }
+
+        return redirect()->route('customers.index')->with('message', 'Customer Created Successfully');
     }
 
     /**
@@ -78,7 +102,6 @@ class CustomerController extends Controller
     {
         $customer =  $this->customerRepository->find($id);
         $countries = $this->countryRepository->all();
-        // $families = $this->familyRepository->all();
         return view('customers.edit', compact('customer', 'countries'));
     }
 

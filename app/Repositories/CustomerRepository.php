@@ -14,7 +14,7 @@ class CustomerRepository implements CustomerRepositoryInterface
 
     public function store($data)
     {
-        return Customer::all()->paginate(10);
+        return Customer::create($data);
     }
 
     public function find($id)
