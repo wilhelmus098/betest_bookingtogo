@@ -6,6 +6,7 @@
         </ul>
     </div>
 @endif
+<a type="button" class="btn btn-primary add" href="{{ route('customers.create') }}">ADD NEW CUSTOMER</a>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -20,15 +21,9 @@
         </tr>
     </thead>
     <tbody>
-        <?php
-            // dd($customers);
-            // foreach ($customers as $customer){
-            //     dd($customer->country->name);
-            // }
-        ?>
         @foreach ($customers as $customer)
             <tr>
-                <td>{{$customer->id}}</td>
+                <td><a href="{{ route('customers.show', $customer->id) }}">{{$customer->id}}</a></td>
                 <td>{{$customer->country->name}}</td>
                 <td>{{$customer->name}}</td>
                 <td>{{$customer->dob}}</td>

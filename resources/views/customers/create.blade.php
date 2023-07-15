@@ -1,8 +1,4 @@
 @extends('layouts.default')
-<?php
-    // dd($customer->family);
-?>
-
 <form method="POST" action="{{ route('customers.store') }}">
     @csrf
     <div class="form-group">

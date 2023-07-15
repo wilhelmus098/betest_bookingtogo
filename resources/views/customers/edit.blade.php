@@ -1,8 +1,4 @@
 @extends('layouts.default')
-<?php
-    // dd($customer->family);
-?>
-
 <form method="POST" action="{{ route('customers.update', $customer->id) }}">
     @csrf
     @method('put')
@@ -76,13 +72,12 @@
     @endif
 <!-- //////////////////////FAMILIES//////////////////////// -->
 
-
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 <script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
 <script type="text/javascript">
-    
+
     function removeRow(id) {
         console.log(id);
         var row = "#"+id;

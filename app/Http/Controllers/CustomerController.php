@@ -10,10 +10,26 @@ use App\Repositories\Interfaces\CountryRepositoryInterface;
 class CustomerController extends Controller
 {
 
+    /**
+     * @var CustomerRepositoryInterface
+     */
     private $customerRepository;
+
+    /**
+     * @var FamilyRepositoryInterface
+     */
     private $familyRepository;
+    
+    /**
+     * @var CountryRepositoryInterface
+     */
     private $countryRepository;
 
+    /**
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param FamilyRepositoryInterface $familyRepository
+     * @param CountryRepositoryInterface $countryRepository
+     */
     public function __construct(
         CustomerRepositoryInterface $customerRepository,
         FamilyRepositoryInterface $familyRepository,
@@ -23,22 +39,24 @@ class CustomerController extends Controller
         $this->familyRepository = $familyRepository;
         $this->countryRepository = $countryRepository;
     }
+
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
     {
         $page = $request->input('page')??1;
         $customers =  $this->customerRepository->all(100, $page);
-
         return view('customers.index', compact('customers'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request)
@@ -56,7 +74,6 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
-        // dd($input);
         $request->validate([
             'name' => 'required|string|max:50',
             'dob' => 'required|date',
@@ -64,7 +81,7 @@ class CustomerController extends Controller
             'email' => 'required|string|max:50',
         ]);
         $customer = $this->customerRepository->store($input);
-        // dd($customer->id);
+
         if(isset($input['family'])){
             $request->validate([
                 'family.*.relation' => 'required|string|max:50',
@@ -150,6 +167,7 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $this->customerRepository->destroy($id);
+        return redirect()->route('customers.index')->with('message', 'Customer Deleted Successfully');
     }
 }

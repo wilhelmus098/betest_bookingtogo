@@ -1,8 +1,4 @@
 @extends('layouts.default')
-<?php
-    // dd($customer->family);
-?>
-
     <div class="form-group">
         <label for="customerId">ID</label>
         <input type="text" class="form-control" id="customerId" value="{{$customer->id}}" name="id" disabled>
@@ -10,24 +6,24 @@
     <div class="form-group">
         <label for="customerCountry">Country</label>
         <select class="form-control" id="customerCountry" name="country" disabled>
-            <option value="{{old('country_id', $customer->country->id)}}">{{$customer->country->name}}</option>
+            <option value="{{$customer->country->id}}">{{$customer->country->name}}</option>
         </select>
     </div>
     <div class="form-group">
         <label for="customerName">Name</label>
-        <input type="text" class="form-control" id="customerName" value="{{old('name', $customer->name)}}" name="name" disabled>
+        <input type="text" class="form-control" id="customerName" value="{{$customer->name}}" name="name" disabled>
     </div>
     <div class="form-group">
         <label for="customerDob">Date of Birth</label>
-        <input type="text" class="form-control" id="customerDob" value="{{old('dob', $customer->dob)}}" name="dob" disabled>
+        <input type="text" class="form-control" id="customerDob" value="{{$customer->dob}}" name="dob" disabled>
     </div>
     <div class="form-group">
         <label for="customerPhone">Phone</label>
-        <input type="text" class="form-control" id="customerPhone" value="{{old('phone', $customer->phone)}}" name="phone" disabled>
+        <input type="text" class="form-control" id="customerPhone" value="{{$customer->phone}}" name="phone" disabled>
     </div>
     <div class="form-group">
         <label for="customerEmail">Email</label>
-        <input type="text" class="form-control" id="customerEmail" value="{{old('email', $customer->email)}}" name="email" disabled>
+        <input type="text" class="form-control" id="customerEmail" value="{{$customer->email}}" name="email" disabled>
     </div>
     <div class="form-group">
         <hr class="hr"/>
